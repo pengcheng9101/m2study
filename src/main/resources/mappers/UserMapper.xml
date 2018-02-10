@@ -151,4 +151,68 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="checkUserName" resultType="int" parameterType="string" >
+    SELECT COUNT(1) FROM user_table WHERE username = #{userName}
+  </select>
+
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    -- 返回userbean 开头的节点已经将user申明为resultMap
+
+    SELECT
+    <include refid="Base_Column_List" /> --产考上面自动生成的代码
+    FROM user_table
+    WHERE username=#{username}
+    and password=#{password}
+  </select>
+  
+  <select id="checkEmail" resultType="int" parameterType="string">
+  SELECT COUNT (1) FROM user_table
+  WHERE email=#{email}
+  </select>
+
+
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    SELECT question FROM user_table
+    WHERE username=#{username}
+
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+  -- 多个参数必须用map
+  SELECT COUNT (1) FROM user_table WHERE
+  username=#{username} AND question=#{question} AND answer =#{answer}
+  </select>
+  
+  
+  
+  <select id="updatePasswordByUserName" resultType="int" parameterType="map">
+  SELECT COUNT (1) FROM user_table WHERE
+  username=#{username} AND password=#{password}
+  </select>
+
+
+  <select id="checkPassword" resultType="int" parameterType="map">
+    SELECT COUNT (1) FROM user_table WHERE
+    id = #{userid} AND
+    password = #{password}
+
+
+
+
+  </select>
+  
+  
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT COUNT (1) user_table WHERE
+    email=#{email}
+    AND
+    id!=#{userid}
+
+
+
+  </select>
 </mapper>
+
+
